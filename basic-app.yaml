@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basic-flask
+  labels: 
+    app: basic-flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: basic-flask
+  template:
+    metadata:
+      labels:
+        app: basic-flask
+    spec:
+      containers:
+      - name:
+        image: ### your image from local docker registry ### 
+        ports:
+        - containerPort: 9000
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-http-server
+spec:
+  selector:
+    app: python-http-server
+  ports: 
+  - protocol: TCP
+    port: 80
+    targetPort: 9000
+  type: LoadBalancer
