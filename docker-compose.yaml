@@ -1,0 +1,6 @@
+version: '3.7'
+services:
+  basic_app:
+    image: 35.242.144.237:5000/basic_app
+    build: .
+    #container_name: front_end
